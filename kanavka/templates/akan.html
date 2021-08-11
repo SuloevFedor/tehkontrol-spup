@@ -1,0 +1,54 @@
+{% extends "base_admin.html" %}
+{% load static %}
+
+{% block content %}
+<form method="POST">
+    <img src="{% static 'images/add_kanavka.jpg' %}">
+    {% csrf_token %}
+        <p class="ll">
+        {{ form_akan.name.label_tag}}{{ form_akan.name }}
+    </p>
+    <p class="ll">
+        {{ form_akan.dmin.label_tag}}{{ form_akan.dmin }}
+        {{ form_akan.ap.label_tag}}{{ form_akan.ap }}
+        {{ form_akan.h.label_tag}}{{ form_akan.h }}
+        {{ form_akan.r.label_tag}}{{ form_akan.r }}
+        {{ form_akan.Lmax.label_tag}}{{ form_akan.Lmax }}
+    </p>
+    <p class="ll">
+        {{ form_password.password.label_tag }}{{ form_password.password }}
+    </p>
+    <p class="ll">
+        <button type="submit" class="but_2">Добавить</button>
+    </p>
+    {% if check %}
+    <p class="rr">Обозначение уже используется</p>
+    {% endif %}
+    {% if check_pass %}
+    <p class="rr">Неверный пароль</p>
+    {% endif %}
+    <p></p>
+    {% if output.count > 0 %}
+        <table align="center" cellspacing="5" cellpadding="5">
+            <tr>
+                <th>Наименование</th>
+                <th>Dmin</th>
+                <th>ap</th>
+                <th>h</th>
+                <th>r</th>
+                <th>L</th>
+            </tr>
+            {% for i in output %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.dmin }}</td>
+                    <td>{{ i.ap }}</td>
+                    <td>{{ i.h }}</td>
+                    <td>{{ i.r }}</td>
+                    <td>{{ i.Lmax }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock content %}

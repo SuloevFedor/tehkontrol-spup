@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Расточка{% endblock title %}
+
+{% block top %}
+    <img src="{% static 'images/rastochka.jpg' %}">
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <p class="ll">
+        {{ form_rastochka.D.label_tag}}{{ form_rastochka.D }}
+        {{ form_rastochka.d.label_tag}}{{ form_rastochka.d }}
+        {{ form_rastochka.L.label_tag}}{{ form_rastochka.L }}
+        {{ form_rastochka.a.label_tag}}{{ form_rastochka.a }}
+    </p>
+    <p></p>
+    <button type="submit" class="but_2">Проверить</button>
+    <p></p>
+    {% if lst %}
+    <p class="ll">Техконтроль пройден успешно</p>
+    <table align="center" cellspacing="5" cellpadding="5">
+            <tr>
+                <th>Наименование</th>
+                <th>Dmin</th>
+                <th>ap</th>
+                <th>W</th>
+                <th>Wp</th>
+                <th>L</th>
+            </tr>
+            {% for i in lst %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.dmin }}</td>
+                    <td>{{ i.ap }}</td>
+                    <td>{{ i.W }}</td>
+                    <td>{{ i.Wp }}</td>
+                    <td>{{ i.Lmax }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if check %}
+        <p class="rr">Техконтроль не пройден</p>
+    {% endif %}
+{% endblock content %}

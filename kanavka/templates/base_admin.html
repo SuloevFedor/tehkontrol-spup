@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id="shapka">
+        <a href="/">
+            <img src="{% static 'images/tehkontrol.jpg' %}">
+        </a>
+    </div>
+    <div id="menu">
+        <p class="ll">Канавочный:
+            <a href="/akan.html">
+                <button class="but_2">Добавить</button>
+            </a>
+            <a href="/dkan.html">
+                <button class="but_2">Удалить</button>
+            </a>
+        </p>
+        <p class="ll">Расточной:
+            <a href="/arast.html">
+                <button class="but_2">Добавить</button>
+            </a>
+            <a href="/drast.html">
+                <button class="but_2">Удалить</button>
+            </a>
+        </p>
+    </div>
+    <div id="content">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock title %}</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id="shapka">
+        {% block top %}{% endblock top %}
+    </div>
+    <div id="menu">
+        <a href="/kanavka.html">
+            <button class="but_1">Канавка</button>
+        </a>
+        <a href="/rast.html">
+            <button class="but_1">Расточка</button>
+        </a>
+        <a href="/admin.html">
+            <button class="but_1">Админ</button>
+        </a>
+    </div>
+    <div id="content">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

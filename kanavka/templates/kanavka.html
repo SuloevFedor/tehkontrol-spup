@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Канавка{% endblock title %}
+
+{% block top %}
+    <img src="{% static 'images/kanavka.jpg' %}">
+{% endblock top %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <p class="ll">
+        {{ form_kanavka.D.label_tag}}{{ form_kanavka.D }}
+        {{ form_kanavka.d.label_tag}}{{ form_kanavka.d }}
+        {{ form_kanavka.L.label_tag}}{{ form_kanavka.L }}
+        {{ form_kanavka.H.label_tag}}{{ form_kanavka.H }}
+        {{ form_kanavka.R.label_tag}}{{ form_kanavka.R }}
+    </p>
+    <p></p>
+    <button type="submit" class="but_2">Проверить</button>
+    <p></p>
+    {% if lst %}
+    <p class="ll">Техконтроль пройден успешно</p>
+    <table align="center" cellspacing="5" cellpadding="5">
+            <tr>
+                <th>Наименование</th>
+                <th>Dmin</th>
+                <th>ap</th>
+                <th>h</th>
+                <th>r</th>
+                <th>L</th>
+            </tr>
+            {% for i in lst %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.dmin }}</td>
+                    <td>{{ i.ap }}</td>
+                    <td>{{ i.h }}</td>
+                    <td>{{ i.r }}</td>
+                    <td>{{ i.Lmax }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+    {% if check %}
+        <p class="rr">Техконтроль не пройден</p>
+    {% endif %}
+{% endblock content %}
