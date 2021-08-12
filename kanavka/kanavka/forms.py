@@ -1,6 +1,6 @@
 from django import forms
-from kanavka import func
-from tools import models
+from kanavka.kanavka import func
+from kanavka.tools import models
 
 
 class Kanavka(forms.Form):

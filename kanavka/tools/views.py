@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from kanavka import forms
-from kanavka import func
-from tools import models
-
+from kanavka.kanavka import forms
+from kanavka.kanavka import func
+from kanavka.tools import models
 
 def index(request):
     return render(request,"index.html")

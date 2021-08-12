@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from tools import views
+from kanavka.tools import views
 
 urlpatterns = [
     path('', views.index),
