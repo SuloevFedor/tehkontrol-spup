@@ -1,5 +1,5 @@
 from django import forms
-from kanavka import func
+from tools import func
 from tools import models
 
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from kanavka import forms
-from kanavka import func
+from . import forms
+from . import func
 from tools import models
 
 def index(request):
@@ -8,25 +8,29 @@ def index(request):
 
 
 def kanavka(request):
-    if request.method == "POST":
-        D = request.POST.get("D")
-        d = request.POST.get("d")
-        L = request.POST.get("L")
-        H = request.POST.get("H")
-        R = request.POST.get("R")
+    form = forms.Kanavka(request.POST)
+    lst = []
+    check = 0
 
-        database = models.KanRezec.objects.all()
-        lst = func.check_kanavka(D, d, L, H, R, database)
-        form_kanavka = forms.Kanavka()
-        check = 0
-        if not lst:
-            check = 1
-        return render(request, "kanavka.html", {"form_kanavka": form_kanavka, "lst": lst, "check": check})
-    else:
-        form_kanavka = forms.Kanavka()
-        lst = []
-        check = 0
-        return render(request, "kanavka.html", {"form_kanavka": form_kanavka, "lst": lst, "check": check})
+    if request.method == "POST":
+        if form.is_valid():
+            database = models.KanRezec.objects.all()
+            lst = func.check_kanavka(
+                form.cleaned_data['D'],
+                form.cleaned_data['d'],
+                form.cleaned_data['L'],
+                form.cleaned_data['H'],
+                form.cleaned_data['R'],
+                database
+            )
+            # если редактирование данных в БД,
+            # то redirect либо на страницу редактирования, либо на какую-то иную
+            # чтобы отменить эффект F5 с повторной отправкой формы и спамом БД.
+
+            if not lst:
+                check = 1
+
+    return render(request, "tools/kanavka.html", {"form_kanavka": form, "lst": lst, "check": check})
 
 
 def rast(request):
