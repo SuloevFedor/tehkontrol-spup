@@ -14,18 +14,18 @@
     </div>
     <div id="menu">
         <p class="ll">Канавочный:
-            <a href="/akan.html">
+            <a href="{% url 'add_int_groove' %}">
                 <button class="but_2">Добавить</button>
             </a>
-            <a href="/dkan.html">
+            <a href="{% url 'del_int_groove' %}">
                 <button class="but_2">Удалить</button>
             </a>
         </p>
         <p class="ll">Расточной:
-            <a href="/arast.html">
+            <a href="{% url 'add_int_turning' %}">
                 <button class="but_2">Добавить</button>
             </a>
-            <a href="/drast.html">
+            <a href="{% url 'del_int_turning' %}">
                 <button class="but_2">Удалить</button>
             </a>
         </p>

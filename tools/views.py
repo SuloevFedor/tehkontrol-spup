@@ -1,256 +1,158 @@
-from django.shortcuts import render
-from kanavka import forms
-from kanavka import func
-from tools import models
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from . import forms
+from . import func
+from . import models
+
+
 
 def index(request):
     return render(request,"index.html")
 
 
-def kanavka(request):
+def check_int_groove(request):
+    form = forms.CheckIntGroove(request.POST)
+    lst = []
+    check = 0
+
     if request.method == "POST":
-        D = request.POST.get("D")
-        d = request.POST.get("d")
-        L = request.POST.get("L")
-        H = request.POST.get("H")
-        R = request.POST.get("R")
+        if form.is_valid():
+            database = models.IntGroove.objects.all()
+            lst = func.check_int_groove(
+                form.cleaned_data['D'],
+                form.cleaned_data['d'],
+                form.cleaned_data['L'],
+                form.cleaned_data['H'],
+                form.cleaned_data['R'],
+                database
+            )
 
-        database = models.KanRezec.objects.all()
-        lst = func.check_kanavka(D, d, L, H, R, database)
-        form_kanavka = forms.Kanavka()
-        check = 0
-        if not lst:
-            check = 1
-        return render(request, "kanavka.html", {"form_kanavka": form_kanavka, "lst": lst, "check": check})
-    else:
-        form_kanavka = forms.Kanavka()
-        lst = []
-        check = 0
-        return render(request, "kanavka.html", {"form_kanavka": form_kanavka, "lst": lst, "check": check})
+            if not lst:
+                check = 1
+
+    return render(request, "tools/check_int_groove.html", {"form": form, "lst": lst, "check": check})
 
 
-def rast(request):
+def check_int_turning(request):
+    form = forms.CheckIntTurning(request.POST)
+    lst = []
+    check = 0
+
     if request.method == "POST":
-        D = request.POST.get("D")
-        d = request.POST.get("d")
-        L = request.POST.get("L")
-        a = request.POST.get("a")
+        if form.is_valid():
+            database = models.IntTurning.objects.all()
+            lst = func.check_int_turning(
+                form.cleaned_data['D'],
+                form.cleaned_data['d'],
+                form.cleaned_data['L'],
+                form.cleaned_data['a'],
+                database,
+            )
 
-        database = models.RastRezec.objects.all()
-        lst = func.check_rastochka(D, d, L, a, database)
-        form_rastochka = forms.Rastochka()
-        check = 0
-        if not lst:
-            check = 1
-        return render(request, "rast.html", {"form_rastochka": form_rastochka, "lst": lst, "check": check})
-    else:
-        form_rastochka = forms.Rastochka()
-        lst = []
-        check = 0
-        return render(request, "rast.html", {"form_rastochka": form_rastochka, "lst": lst, "check": check})
+            if not lst:
+                check = 1
+
+    return render(request, "tools/check_int_turning.html", {"form": form, "lst": lst, "check": check})
 
 
-def admin(request):
-    return render(request,"admin.html")
-
-
-def akan(request):
+def login(request):
+    form = forms.Password(request.POST)
+    check = 0
     if request.method == "POST":
-        output = models.KanRezec.objects.all()
-        password = request.POST.get("password")
-        name = request.POST.get("name")
-        check_pass = func.password(password)
-        check = func.check_name(name, output)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+    #if user is None:
+    #    check = 1
+            if user is not None:
+                login(request, user) #  !!!!! НЕ РАБОТАЕТ !!!!!!!
+                return redirect('tools_index')
 
-        if not check_pass and not check:
-            rezec = models.KanRezec()
-            rezec.name = request.POST.get("name")
-            rezec.dmin = request.POST.get("dmin")
-            rezec.ap = request.POST.get("ap")
-            rezec.h = request.POST.get("h")
-            rezec.r = request.POST.get("r")
-            rezec.Lmax = request.POST.get("Lmax")
-            rezec.save()
-
-            output = models.KanRezec.objects.all()
-            form_akan = forms.FormKanRezec()
-            form_password = forms.Password()
-            post = {
-                "form_akan": form_akan,
-                "form_password": form_password,
-                "output": output,
-                "check": check,
-                "check_pass": check_pass,
-            }
-            return render(request, "akan.html", post)
-
-        form_akan = forms.FormKanRezec()
-        form_password = forms.Password()
-        post = {
-            "form_akan": form_akan,
-            "form_password": form_password,
-            "output": output,
-            "check": check,
-            "check_pass": check_pass,
-        }
-        return render(request, "akan.html", post)
-    else:
-        output = models.KanRezec.objects.all()
-        form_akan = forms.FormKanRezec()
-        form_password = forms.Password()
-        check = 0
-        check_pass = 0
-        post = {
-            "form_akan": form_akan,
-            "form_password": form_password,
-            "output": output,
-            "check": check,
-            "check_pass": check_pass,
-        }
-        return render(request, "akan.html", post)
+    return render(request,"tools/login.html", {"form": form, "check": check})
 
 
-def arast(request):
+def tools_index(request):
+    return render(request, "tools/index.html")
+
+
+def add_int_groove(request):
+    form = forms.AddIntGroove(request.POST)
+    output = models.IntGroove.objects.all()
+    check = 0
+
     if request.method == "POST":
-        output = models.RastRezec.objects.all()
-        password = request.POST.get("password")
-        name = request.POST.get("name")
-        check_pass = func.password(password)
-        check = func.check_name(name, output)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            check = func.check_name(name, output)
 
-        if not check_pass and not check:
-            rezec = models.RastRezec()
-            rezec.name = request.POST.get("name")
-            rezec.dmin = request.POST.get("dmin")
-            rezec.ap = request.POST.get("ap")
-            rezec.gugol = request.POST.get("W")
-            rezec.ugol = request.POST.get("Wp")
-            rezec.Lmax = request.POST.get("Lmax")
-            rezec.save()
+            if not check:
+                tool = models.IntGroove()
+                tool.name = form.cleaned_data['name']
+                tool.dmin = form.cleaned_data['dmin']
+                tool.ap = form.cleaned_data['ap']
+                tool.h = form.cleaned_data['h']
+                tool.r = form.cleaned_data['r']
+                tool.Lmax = form.cleaned_data['Lmax']
+                tool.save()
 
-            output = models.RastRezec.objects.all()
-            form_arast = forms.FormRastRezec()
-            form_password = forms.Password()
-            post = {
-                "form_arast": form_arast,
-                "form_password": form_password,
-                "output": output,
-                "check": check,
-                "check_pass": check_pass,
-            }
-            return render(request, "arast.html", post)
+                output = models.IntGroove.objects.all()
 
-        form_arast = forms.FormRastRezec()
-        form_password = forms.Password()
-        post = {
-            "form_arast": form_arast,
-            "form_password": form_password,
-            "output": output,
-            "check": check,
-            "check_pass": check_pass,
-        }
-        return render(request, "arast.html", post)
-    else:
-        output = models.RastRezec.objects.all()
-        form_arast = forms.FormRastRezec()
-        form_password = forms.Password()
-        check = 0
-        check_pass = 0
-        post = {
-            "form_arast": form_arast,
-            "form_password": form_password,
-            "output": output,
-            "check": check,
-            "check_pass": check_pass,
-        }
-        return render(request, "arast.html", post)
+    return render(request, "tools/add_int_groove.html", {"form": form, "output": output, "check": check,})
 
 
-def dkan(request):
+def add_int_turning(request):
+    form = forms.AddIntTurning(request.POST)
+    output = models.IntTurning.objects.all()
+    check = 0
+
     if request.method == "POST":
-        password = request.POST.get("password")
-        check_pass = func.password(password)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            check = func.check_name(name, output)
 
-        if not check_pass:
-            ident = request.POST.get("ident")
-            rezec = models.KanRezec.objects.get(name=ident)
-            rezec.delete()
+            if not check:
+                tool = models.IntTurning()
+                tool.name = form.cleaned_data['name']
+                tool.dmin = form.cleaned_data['dmin']
+                tool.ap = form.cleaned_data['ap']
+                tool.W = form.cleaned_data['W']
+                tool.Wp = form.cleaned_data['Wp']
+                tool.Lmax = form.cleaned_data['Lmax']
+                tool.save()
 
-            output = models.KanRezec.objects.all()
-            form_dkan = forms.FormDelKan()
-            form_password = forms.Password()
-            post = {
-                "form_dkan": form_dkan,
-                "form_password": form_password,
-                "output": output,
-                "check_pass": check_pass,
-            }
-            return render(request, "dkan.html", post)
+                output = models.IntTurning.objects.all()
 
-        output = models.KanRezec.objects.all()
-        form_dkan = forms.FormDelKan()
-        form_password = forms.Password()
-        post = {
-            "form_dkan": form_dkan,
-            "form_password": form_password,
-            "output": output,
-            "check_pass": check_pass,
-        }
-        return render(request, "dkan.html", post)
-    else:
-        output = models.KanRezec.objects.all()
-        form_dkan = forms.FormDelKan()
-        form_password = forms.Password()
-        check_pass = 0
-        post = {
-            "form_dkan": form_dkan,
-            "form_password": form_password,
-            "output": output,
-            "check_pass": check_pass,
-        }
-        return render(request, "dkan.html", post)
+    return render(request, "tools/add_int_turning.html", {"form": form, "output": output, "check": check, })
 
 
-def drast(request):
+def del_int_groove(request):
+    form = forms.DelIntGroove(request.POST)
+    output = models.IntGroove.objects.all()
+
     if request.method == "POST":
-        password = request.POST.get("password")
-        check_pass = func.password(password)
+        if form.is_valid():
+            #ident = request.POST.get("ident")
+            name = form.cleaned_data['name']
+            tool = models.IntGroove.objects.get(name=name)
+            tool.delete()
 
-        if not check_pass:
-            ident = request.POST.get("ident")
-            rezec = models.RastRezec.objects.get(name=ident)
-            rezec.delete()
+            output = models.IntGroove.objects.all()
 
-            output = models.RastRezec.objects.all()
-            form_drast = forms.FormDelRast()
-            form_password = forms.Password()
-            post = {
-                "form_drast": form_drast,
-                "form_password": form_password,
-                "output": output,
-                "check_pass": check_pass,
-            }
-            return render(request, "drast.html", post)
+    return render(request, "tools/del_int_groove.html", {"form": form, "output": output})
 
-        output = models.RastRezec.objects.all()
-        form_drast = forms.FormDelRast()
-        form_password = forms.Password()
-        post = {
-            "form_drast": form_drast,
-            "form_password": form_password,
-            "output": output,
-            "check_pass": check_pass,
-        }
-        return render(request, "drast.html", post)
-    else:
-        output = models.RastRezec.objects.all()
-        form_drast = forms.FormDelRast()
-        form_password = forms.Password()
-        check_pass = 0
-        post = {
-            "form_drast": form_drast,
-            "form_password": form_password,
-            "output": output,
-            "check_pass": check_pass,
-        }
-        return render(request, "drast.html", post)
+
+def del_int_turning(request):
+    form = forms.DelIntTurning(request.POST)
+    output = models.IntTurning.objects.all()
+
+    if request.method == "POST":
+        if form.is_valid():
+            # ident = request.POST.get("ident")
+            name = form.cleaned_data['name']
+            tool = models.IntTurning.objects.get(name=name)
+            tool.delete()
+
+            output = models.IntTurning.objects.all()
+
+    return render(request, "tools/del_int_turning.html", {"form": form, "output": output})

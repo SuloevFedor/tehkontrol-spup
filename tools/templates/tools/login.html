@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id="shapka">
+        <a href="/">
+            <img src="{% static 'images/tehkontrol.jpg' %}">
+        </a>
+    </div>
+    <div id="menu">
+        <form method="POST">
+            {% csrf_token %}
+            <p class="ll">
+                {{ form.username.label_tag }}{{ form.username }}
+            </p>
+            <p>
+                {{ form.password.label_tag }}{{ form.password }}
+            </p>
+            <button type="submit" class="but_2">Войти</button>
+            {% if check %}
+            <p class="rr">Техконтроль не пройден</p>
+            {% endif %}
+    </div>
+    <div id="content">
+        Раздел для редактирования базы инструмента
+    </div>
+</body>
+</html>

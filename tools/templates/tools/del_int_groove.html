@@ -5,15 +5,9 @@
 <form method="POST">
     {% csrf_token %}
     <p class="ll">
-        {{ form_dkan.ident.label_tag }}{{ form_dkan.ident }}
+        {{ form.name.label_tag }}{{ form.name }}
     <p/>
-    <p class="ll">
-        {{ form_password.password.label_tag }}{{ form_password.password }}
-    </p>
     <button type="submit" class="but_2">Удалить</button>
-    {% if check_pass %}
-    <p class="rr">Неверный пароль</p>
-    {% endif %}
     <p></p>
     {% if output.count > 0 %}
         <table align="center" cellspacing="5" cellpadding="5">

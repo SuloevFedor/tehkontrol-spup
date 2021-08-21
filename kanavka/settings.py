@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'aaaa(bbbb(+cccc+)1111)2222')
 # DEBUG = True
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = ['tehkontrol-spup.herokuapp.com']
+ALLOWED_HOSTS = ['tehkontrol-spup.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -58,11 +58,12 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'kanavka.urls'
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
+TEMPLATE_DIR_TOOL = os.path.join(BASE_DIR, "tools/templates")
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR,],
+        'DIRS': [TEMPLATE_DIR, TEMPLATE_DIR_TOOL,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,6 +130,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'tools/static'),
 )
 
 # Default primary key field type

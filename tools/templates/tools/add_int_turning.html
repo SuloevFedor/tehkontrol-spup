@@ -3,29 +3,23 @@
 
 {% block content %}
 <form method="POST">
-    <img src="{% static 'images/add_rastochka.jpg' %}">
+    <img src="{% static 'tools/images/add_int_turning.jpg' %}">
     {% csrf_token %}
         <p class="ll">
-        {{ form_arast.name.label_tag}}{{ form_arast.name }}
+        {{ form.name.label_tag}}{{ form.name }}
     </p>
     <p class="ll">
-        {{ form_arast.dmin.label_tag}}{{ form_arast.dmin }}
-        {{ form_arast.ap.label_tag}}{{ form_arast.ap }}
-        {{ form_arast.W.label_tag}}{{ form_arast.W }}
-        {{ form_arast.Wp.label_tag}}{{ form_arast.Wp }}
-        {{ form_arast.Lmax.label_tag}}{{ form_arast.Lmax }}
-    </p>
-    <p class="ll">
-        {{ form_password.password.label_tag }}{{ form_password.password }}
+        {{ form.dmin.label_tag}}{{ form.dmin }}
+        {{ form.ap.label_tag}}{{ form.ap }}
+        {{ form.W.label_tag}}{{ form.W }}
+        {{ form.Wp.label_tag}}{{ form.Wp }}
+        {{ form.Lmax.label_tag}}{{ form.Lmax }}
     </p>
     <p class="ll">
         <button type="submit" class="but_2">Добавить</button>
     </p>
     {% if check %}
     <p class="rr">Обозначение уже используется</p>
-    {% endif %}
-    {% if check_pass %}
-    <p class="rr">Неверный пароль</p>
     {% endif %}
     <p></p>
     {% if output.count > 0 %}
@@ -43,8 +37,8 @@
                     <td>{{ i.name }}</td>
                     <td>{{ i.dmin }}</td>
                     <td>{{ i.ap }}</td>
-                    <td>{{ i.gugol }}</td>
-                    <td>{{ i.ugol }}</td>
+                    <td>{{ i.W }}</td>
+                    <td>{{ i.Wp }}</td>
                     <td>{{ i.Lmax }}</td>
                 </tr>
             {% endfor %}

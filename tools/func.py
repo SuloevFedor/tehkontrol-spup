@@ -1,10 +1,10 @@
-def check_kanavka(D, d, L, H, R, database):
+def check_int_groove(D, d, L, H, R, database):
     lst = []
-    D = float(D)
-    d = float(d)
-    L = float(L)
-    H = float(H)
-    R = float(R)
+    #D = float(D)
+    #d = float(d)
+    #L = float(L)
+    #H = float(H)
+    #R = float(R)
     for i in database:
         if i.dmin <= d and \
                 (D-d)/2 < i.ap and \
@@ -24,12 +24,12 @@ def check_kanavka(D, d, L, H, R, database):
     return lst
 
 
-def check_rastochka(D, d, L, a, database):
+def check_int_turning(D, d, L, a, database):
     lst = []
-    D = float(D)
-    d = float(d)
-    L = float(L)
-    a = float(a)
+    #D = float(D)
+    #d = float(d)
+    #L = float(L)
+    #a = float(a)
     for i in database:
         if i.dmin <= d and \
                 (D - d) / 2 < i.ap and \

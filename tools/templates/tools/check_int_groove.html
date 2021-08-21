@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Расточка{% endblock title %}
+{% block title %}Канавка{% endblock title %}
 
 {% block top %}
-    <img src="{% static 'images/rastochka.jpg' %}">
-{% endblock %}
+    <img src="{% static 'tools/images/int_groove.jpg' %}">
+{% endblock top %}
 
 {% block content %}
 <form method="POST">
     {% csrf_token %}
     <p class="ll">
-        {{ form_rastochka.D.label_tag}}{{ form_rastochka.D }}
-        {{ form_rastochka.d.label_tag}}{{ form_rastochka.d }}
-        {{ form_rastochka.L.label_tag}}{{ form_rastochka.L }}
-        {{ form_rastochka.a.label_tag}}{{ form_rastochka.a }}
+        {{ form.D.label_tag}}{{ form.D }}
+        {{ form.d.label_tag}}{{ form.d }}
+        {{ form.L.label_tag}}{{ form.L }}
+        {{ form.H.label_tag}}{{ form.H }}
+        {{ form.R.label_tag}}{{ form.R }}
     </p>
     <p></p>
     <button type="submit" class="but_2">Проверить</button>
@@ -26,8 +27,8 @@
                 <th>Наименование</th>
                 <th>Dmin</th>
                 <th>ap</th>
-                <th>W</th>
-                <th>Wp</th>
+                <th>h</th>
+                <th>r</th>
                 <th>L</th>
             </tr>
             {% for i in lst %}
@@ -35,8 +36,8 @@
                     <td>{{ i.name }}</td>
                     <td>{{ i.dmin }}</td>
                     <td>{{ i.ap }}</td>
-                    <td>{{ i.W }}</td>
-                    <td>{{ i.Wp }}</td>
+                    <td>{{ i.h }}</td>
+                    <td>{{ i.r }}</td>
                     <td>{{ i.Lmax }}</td>
                 </tr>
             {% endfor %}

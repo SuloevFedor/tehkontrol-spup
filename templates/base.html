@@ -11,13 +11,13 @@
         {% block top %}{% endblock top %}
     </div>
     <div id="menu">
-        <a href="/kanavka.html">
+        <a href="{% url 'check_int_groove' %}">
             <button class="but_1">Канавка</button>
         </a>
-        <a href="/rast.html">
+        <a href="{% url 'check_int_turning' %}">
             <button class="but_1">Расточка</button>
         </a>
-        <a href="/admin.html">
+        <a href="{% url 'login' %}">
             <button class="but_1">Админ</button>
         </a>
     </div>

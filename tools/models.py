@@ -1,6 +1,6 @@
 from django.db import models
 
-class KanRezec(models.Model):
+class IntGroove(models.Model):
     name = models.CharField(max_length=40)
     dmin = models.DecimalField(decimal_places=1, max_digits=1000)
     ap = models.DecimalField(decimal_places=1, max_digits=1000)
@@ -12,12 +12,12 @@ class KanRezec(models.Model):
         return self.name
 
 
-class RastRezec(models.Model):
+class IntTurning(models.Model):
     name = models.CharField(max_length=40)
     dmin = models.DecimalField(decimal_places=1, max_digits=1000)
     ap = models.DecimalField(decimal_places=1, max_digits=1000)
-    gugol = models.DecimalField(decimal_places=1, max_digits=1000)
-    ugol = models.DecimalField(decimal_places=1, max_digits=1000)
+    W = models.DecimalField(decimal_places=1, max_digits=1000)
+    Wp = models.DecimalField(decimal_places=1, max_digits=1000)
     Lmax = models.DecimalField(decimal_places=1, max_digits=1000)
 
     def __str__(self):

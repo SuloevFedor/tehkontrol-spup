@@ -3,29 +3,23 @@
 
 {% block content %}
 <form method="POST">
-    <img src="{% static 'images/add_kanavka.jpg' %}">
+    <img src="{% static 'tools/images/add_int_groove.jpg' %}">
     {% csrf_token %}
         <p class="ll">
-        {{ form_akan.name.label_tag}}{{ form_akan.name }}
+        {{ form.name.label_tag}}{{ form.name }}
     </p>
     <p class="ll">
-        {{ form_akan.dmin.label_tag}}{{ form_akan.dmin }}
-        {{ form_akan.ap.label_tag}}{{ form_akan.ap }}
-        {{ form_akan.h.label_tag}}{{ form_akan.h }}
-        {{ form_akan.r.label_tag}}{{ form_akan.r }}
-        {{ form_akan.Lmax.label_tag}}{{ form_akan.Lmax }}
-    </p>
-    <p class="ll">
-        {{ form_password.password.label_tag }}{{ form_password.password }}
+        {{ form.dmin.label_tag}}{{ form.dmin }}
+        {{ form.ap.label_tag}}{{ form.ap }}
+        {{ form.h.label_tag}}{{ form.h }}
+        {{ form.r.label_tag}}{{ form.r }}
+        {{ form.Lmax.label_tag}}{{ form.Lmax }}
     </p>
     <p class="ll">
         <button type="submit" class="but_2">Добавить</button>
     </p>
     {% if check %}
     <p class="rr">Обозначение уже используется</p>
-    {% endif %}
-    {% if check_pass %}
-    <p class="rr">Неверный пароль</p>
     {% endif %}
     <p></p>
     {% if output.count > 0 %}

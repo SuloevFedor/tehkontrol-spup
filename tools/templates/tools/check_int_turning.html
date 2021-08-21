@@ -1,21 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Канавка{% endblock title %}
+{% block title %}Расточка{% endblock title %}
 
 {% block top %}
-    <img src="{% static 'images/kanavka.jpg' %}">
-{% endblock top %}
+    <img src="{% static 'tools/images/int_turning.jpg' %}">
+{% endblock %}
 
 {% block content %}
 <form method="POST">
     {% csrf_token %}
     <p class="ll">
-        {{ form_kanavka.D.label_tag}}{{ form_kanavka.D }}
-        {{ form_kanavka.d.label_tag}}{{ form_kanavka.d }}
-        {{ form_kanavka.L.label_tag}}{{ form_kanavka.L }}
-        {{ form_kanavka.H.label_tag}}{{ form_kanavka.H }}
-        {{ form_kanavka.R.label_tag}}{{ form_kanavka.R }}
+        {{ form.D.label_tag}}{{ form.D }}
+        {{ form.d.label_tag}}{{ form.d }}
+        {{ form.L.label_tag}}{{ form.L }}
+        {{ form.a.label_tag}}{{ form.a }}
     </p>
     <p></p>
     <button type="submit" class="but_2">Проверить</button>
@@ -27,8 +26,8 @@
                 <th>Наименование</th>
                 <th>Dmin</th>
                 <th>ap</th>
-                <th>h</th>
-                <th>r</th>
+                <th>W</th>
+                <th>Wp</th>
                 <th>L</th>
             </tr>
             {% for i in lst %}
@@ -36,8 +35,8 @@
                     <td>{{ i.name }}</td>
                     <td>{{ i.dmin }}</td>
                     <td>{{ i.ap }}</td>
-                    <td>{{ i.h }}</td>
-                    <td>{{ i.r }}</td>
+                    <td>{{ i.W }}</td>
+                    <td>{{ i.Wp }}</td>
                     <td>{{ i.Lmax }}</td>
                 </tr>
             {% endfor %}
