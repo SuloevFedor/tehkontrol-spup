@@ -138,11 +138,6 @@ class DelIntTurning(forms.Form):
 
 
 class Password(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={"class": "tt"}), label="Имя", max_length=40)
-    password = forms.CharField(widget=forms.TextInput(attrs={"class": "tt"}), label="Пароль", max_length=40)
-
-
-""" 
     username = forms.CharField(widget=forms.PasswordInput(attrs={"class": "pass"}),
                             initial="Имя",
                             label="Имя",
@@ -152,4 +147,8 @@ class Password(forms.Form):
                                initial="Пароль",
                                label="Пароль",
                                max_length=40
-                               )"""
+                               )
+"""
+username = forms.CharField(widget=forms.TextInput(attrs={"class": "tt"}), label="Имя", max_length=40)
+    password = forms.CharField(widget=forms.TextInput(attrs={"class": "tt"}), label="Пароль", max_length=40)
+"""

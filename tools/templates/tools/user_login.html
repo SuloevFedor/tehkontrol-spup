@@ -17,13 +17,11 @@
             {% csrf_token %}
             <p class="ll">
                 {{ form.username.label_tag }}{{ form.username }}
-            </p>
-            <p>
                 {{ form.password.label_tag }}{{ form.password }}
             </p>
             <button type="submit" class="but_2">Войти</button>
             {% if check %}
-            <p class="rr">Техконтроль не пройден</p>
+                <p class="rr">Неверное имя или пароль</p>
             {% endif %}
     </div>
     <div id="content">
